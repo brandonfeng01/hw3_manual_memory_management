@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+
+# build output
+hw3
+*.o
+*.out
+
+# IDE
+.idea/
+.vscode/
+
+# CMake
+cmake-build-*/
+
+# misc
+*.swp
+*.swo
