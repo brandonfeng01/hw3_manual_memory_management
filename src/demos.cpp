@@ -34,10 +34,14 @@ void run_part2() {
     Trade* t2 = new Trade("GOOG", 2800.0);
 
     delete t1;
-    t1 = nullptr; // deleting the same pointer twice is undefined behavior
+    // The original bug was deleting t1 a second time.
+    // Double delete is dangerous because it is undefined behavior and can crash the program.
+    t1 = nullptr;
 
     Trade* t3 = new Trade("MSFT", 300.0);
-    delete t3; // overwriting t3 without freeing the old object would leak memory
+    // The original bug was assigning a new object to t3 before freeing the old one.
+    // That would leak memory because the first allocation becomes unreachable.
+    delete t3;
     t3 = new Trade("TSLA", 750.0);
 
     Trade* trades = new Trade[3]{
@@ -48,7 +52,9 @@ void run_part2() {
 
     delete t2;
     delete t3;
-    delete[] trades; // arrays created with new[] must be destroyed with delete[]
+    // The original bug was using delete instead of delete[] for an array allocation.
+    // That mismatch is dangerous because it is undefined behavior and may not destroy all elements correctly.
+    delete[] trades;
 }
 
 void run_part3() {
