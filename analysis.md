@@ -12,7 +12,7 @@ If `delete` is never called, the allocated memory is not released. This creates 
 
 ### Can you call `delete` twice on the same pointer? What did you observe?
 
-Calling `delete` twice on the same pointer is unsafe and also leads to undefined behavior. A program may crash immediately, or it may seem to run normally while silently corrupting memory. This is dangerous because the bug may be hard to detect.
+When I tested deleting the same pointer twice, the first `delete` worked normally, but the second caused abnormal behavior and the program terminated with `Trace/BPT trap: 5`. This shows that double deletion leads to undefined behavior.
 
 ---
 
@@ -56,7 +56,7 @@ The test program shows that the managed object is destroyed automatically when t
 
 ### How does the shared handle work?
 
-The shared handle allows multiple objects to refer to the same dynamically allocated trade. Instead of giving ownership to only one object, it keeps track of how many handles are using the same resource.
+The shared handle allows multiple objects to refer to the same dynamically allocated trade. Instead of giving ownership to only one object, it keeps track of how many handles are using the same resource through a control block.
 
 ### Why is copying allowed in the shared version?
 

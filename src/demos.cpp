@@ -34,10 +34,10 @@ void run_part2() {
     Trade* t2 = new Trade("GOOG", 2800.0);
 
     delete t1;
-    t1 = nullptr;
+    t1 = nullptr; // deleting the same pointer twice is undefined behavior
 
     Trade* t3 = new Trade("MSFT", 300.0);
-    delete t3;
+    delete t3; // overwriting t3 without freeing the old object would leak memory
     t3 = new Trade("TSLA", 750.0);
 
     Trade* trades = new Trade[3]{
@@ -48,7 +48,7 @@ void run_part2() {
 
     delete t2;
     delete t3;
-    delete[] trades;
+    delete[] trades; // arrays created with new[] must be destroyed with delete[]
 }
 
 void run_part3() {

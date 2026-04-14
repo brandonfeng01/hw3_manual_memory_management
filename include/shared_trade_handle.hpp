@@ -2,10 +2,16 @@
 
 #include "trade.hpp"
 
+struct ControlBlock {
+    Trade* ptr;
+    int count;
+
+    explicit ControlBlock(Trade* p) : ptr(p), count(1) {}
+};
+
 class SharedTradeHandle {
 private:
-    Trade* ptr;
-    int* count;
+    ControlBlock* control;
 
     void release();
 
